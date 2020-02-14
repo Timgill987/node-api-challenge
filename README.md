@@ -40,13 +40,23 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+I learned that Express is liek the react for the backend. You can still make middleware components and import them like react. I appreciate the same methods here in backend as we have them in the front end on this topic.
+
+
 - [ ] Describe Middleware?
+
+middleware is virtually almost all code writen in the backend. good examples are validation functions, req,res, and next().
 
 - [ ] Describe a Resource?
 
+a resource as we know it now is a data table.
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+a status code (200)
+
 - [ ] How can we partition our application into sub-applications?
+separating topics into their own category of data for instance. genres of music, rock, pop, country, ect.
 
 ## Minimum Viable Product
 
