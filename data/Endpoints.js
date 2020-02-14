@@ -146,7 +146,27 @@ router.get("/projects/:id/actions", (req, res) => {
       });
   });
 
-router.post("/actions/:id", (req, res) => {
+  router.get("/actions/:id", (req, res) => {
+    const { id } = req.params;
+  
+    action
+      .get(id)
+      .then(project => {
+        if (project) {
+          res.status(200).json(project);
+        } else {
+          res.status(404).json({ message: "Beeeep? - Id Does not exist" });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({
+          errorMessage:
+            " ¯\_(ツ)_/¯ - Action information could not be retrieved  "
+        });
+      });
+  });
+
+router.post("/actions", (req, res) => {
     const actionInfo = req.body;
     if (actionInfo) {
       action.insert(actionInfo)
@@ -167,12 +187,56 @@ router.post("/actions/:id", (req, res) => {
     }
 });
 
-router.delete("/projects/:id/actions", (req, res) => {
+router.delete("/actions/:id", (req, res) => {
+    const { id } = req.params
 
+    action.remove(id)
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: "Delete Spell Critical Hit!!! It was Super Effective!"
+        });
+      } else {
+        res
+          .status(404)
+          .json({ message: " The action with the specified ID does not exist." });
+      }
+    })
+    .catch(error => {
+      // log error to database
+      console.log(error);
+      res.status(500).json({
+        message: " ¯\_(ツ)_/¯ -The action could not be removed"
+      });
+    });
 });
 
-router.put("/projects/:id/actions", (req, res) => {
-
+router.put("/actions/:id", (req, res) => {
+    const changes = req.body;
+    if (!changes) {
+      res
+        .status(400)
+        .json({ message: "Please provide a project id, description, and notes for the action." });
+    } else {
+      action.update(req.params.id, changes)
+        .then(newProject => {
+          if (newProject) {
+            res.status(200).json(newProject);
+          }
+          {
+            res.status(404).json({
+              message: "The action with the specified ID does not exist."
+            });
+          }
+        })
+        .catch(error => {
+          // log error to database
+          console.log(error);
+          res.status(500).json({
+            message: " ¯\_(ツ)_/¯ -Error updating the action"
+          });
+        });
+    }
 });
 
 
